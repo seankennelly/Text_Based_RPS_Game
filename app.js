@@ -26,23 +26,33 @@ const game = () => {
   let computerScore = 0;
   let totalScore = '';
 
-  for (let i = 1; i < 6; i++) {
-    let userInput = prompt("Please enter either 'Rock', 'Paper', or 'Scissors'. Or type 'Quit' at any time to quit.").toLowerCase();
+  outerLoop: for (let i = 1; i < 6; i++) {
+    let userInput = prompt("1: Please enter either 'Rock', 'Paper', or 'Scissors'. Or type 'Quit' at any time to quit.").toLowerCase();
+    // CHECKS IF USER HAS ENTERED SOMETHING
+    while (userInput === null || userInput.trim() === "") {
+      userInput = prompt("2: Enter either 'Rock', 'Paper', or 'Scissors'. Or type 'Quit' at any time to quit.").toLowerCase();
+    };
+    // FORMATS INPUT
     let formattedInput = userInput[0].toUpperCase() + userInput.slice(1);
     let playerSelection = '';
-
+    // ALLOWS USER TO QUIT FROM MAIN PROMPT
     if (formattedInput === 'Quit') {
       console.log("See you next time");
       break;
     } else {
-
+      // PROMPT FOR INCORRECT INPUT
       while (!playOptions.includes(formattedInput)) {
-        userInput = prompt("Sorry, you can only enter 'Rock', 'Paper', or 'Scissors'! (Or 'Quit' to leave the game'").toLowerCase();
+        userInput = prompt("3: Sorry, you can only enter 'Rock', 'Paper', or 'Scissors'! (Or 'Quit' to leave the game)").toLowerCase();
+        // NESTED CHECK FOR EMPTY PROMPT
+        while (userInput === null || userInput.trim() === "") {
+          userInput = prompt("4: Enter either 'Rock', 'Paper', or 'Scissors'. Or type 'Quit' at any time to quit.").toLowerCase();
+        };
         formattedInput = userInput[0].toUpperCase() + userInput.slice(1);
+        // ALLOWS USER TO QUIT FROM SECONDARY PROMPT
         if (formattedInput === 'Quit') {
           console.log("See you next time");
+          break outerLoop;
         };
-        break;
       };
       playerSelection = formattedInput;
       const computerSelection = computerPlay();
@@ -54,11 +64,7 @@ const game = () => {
         playerScore++;
       };
       console.log(`Round ${i}: ${round.msg}`);
-
-
     }
-
-
   };
 
   if (computerScore > playerScore) {
