@@ -87,13 +87,12 @@ playerScore = 0;
 computerScore = 0;
 totalScore = '';
 gameScore = gameScore;
-userInput = prompt
 
-
-for (let i = 0; i <= 1; i++) {
-  ("To play again please enter: continue. Or type 'Quit' at any time to quit.").toLowerCase();
-let formattedInput = userInput[0].toUpperCase() + userInput.slice(1);
-let playerSelection = '';
+for (let i = 0; i < 0; i++) {
+   userInput = prompt
+  ("To play again please enter 'Rock', 'Paper', or 'Scissors'! ('Quit' at any time to quit.").toLowerCase();
+  let formattedInput = userInput[0].toUpperCase() + userInput.slice(1);
+  let playerSelection = '';
 
   if (formattedInput === 'Quit') {
     console.log("See you next time");
