@@ -83,6 +83,7 @@ const game = () => {
 
 game();
 
+for (j = 1; j < 3; j++) {
 playerScore = 0;
 computerScore = 0;
 totalScore = '';
@@ -100,11 +101,37 @@ for (let i = 0; i < 0; i++) {
   }else if (formattedInput === 'continue') {
 computerPlay();
 playRound();
-  }else if(gameScore === 3) {
-    console.log(`you are undefeated`)
-    break;
   }
 };
+if(gameScore === 2) {
+  console.log(`you are undefeated`)
+  break;
+}
+}
 game();
+
+// playerScore = 0;
+// computerScore = 0;
+// totalScore = '';
+// gameScore = gameScore;
+
+// for (let i = 0; i < 0; i++) {
+//    userInput = prompt
+//   ("To play again please enter 'Rock', 'Paper', or 'Scissors'! ('Quit' at any time to quit.").toLowerCase();
+//   let formattedInput = userInput[0].toUpperCase() + userInput.slice(1);
+//   let playerSelection = '';
+
+//   if (formattedInput === 'Quit') {
+//     console.log("See you next time");
+//     break;
+//   }else if (formattedInput === 'continue') {
+// computerPlay();
+// playRound();
+//   }else if(gameScore === 2) {
+//     console.log(`you are undefeated`)
+//     break;
+//   }
+// };
+// game();
 
 
