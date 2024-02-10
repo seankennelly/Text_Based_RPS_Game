@@ -1,10 +1,37 @@
-const playOptions = ["Rock", "Paper", "Scissors"];
+const playOptions = ["rock", "paper", "scissors"];
+let quitGame = false;
 
 const computerPlay = () => {
   return playOptions[Math.floor(Math.random() * 3)];
 };
 
+function checkInput() {
+  let userInput = prompt("Please enter either 'Rock', 'Paper', or 'Scissors'. Or click 'Cancel' at any time to quit.");
+  if (userInput === null) {
+    const promptChoice = confirm("Do you really want to quit?");
+    if (promptChoice) {
+      console.log("See you next time");
+      quitGame = true;
+    } else {
+      return checkInput();
+    }
+  };
+
+  if (!quitGame) {
+    userInput = userInput = userInput.toLowerCase().trim();
+  };
+  if (!quitGame && !playOptions.includes(userInput)) {
+    return checkInput();
+  } else {
+    return userInput;
+  };
+};
+
 const playRound = (playerSelection, computerSelection) => {
+  // Formats return values
+  playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1);
+  computerSelection = computerSelection[0].toUpperCase() + computerSelection.slice(1);
+  // Game mechanics
   if (playerSelection === computerSelection) {
     return { result: 'draw', msg: `You drew! You both picked ${playerSelection}.` }
   } else if
@@ -25,46 +52,21 @@ const game = () => {
   let totalScore = '';
 
   outerLoop: for (let i = 1; i < 6; i++) {
-    let userInput = prompt("Please enter either 'Rock', 'Paper', or 'Scissors'. Or type 'Quit' at any time to quit.").toLowerCase();
-    // CHECKS IF USER HAS ENTERED SOMETHING
-    while (userInput === null || userInput.trim() === "") {
-      userInput = prompt("Enter either 'Rock', 'Paper', or 'Scissors'. Or type 'Quit' at any time to quit.").toLowerCase();
+    playerSelection = checkInput();
+    if (quitGame === true) {
+      return null;
     };
-    // FORMATS INPUT
-    let formattedInput = userInput[0].toUpperCase() + userInput.slice(1);
-    let playerSelection = '';
-    // ALLOWS USER TO QUIT FROM MAIN PROMPT
-    if (formattedInput === 'Quit') {
-      console.log("See you next time");
-      break;
-    } else {
-      // PROMPT FOR INCORRECT INPUT
-      while (!playOptions.includes(formattedInput)) {
-        userInput = prompt("Sorry, you can only enter 'Rock', 'Paper', or 'Scissors'! (Or 'Quit' to leave the game)").toLowerCase();
-        // NESTED CHECK FOR EMPTY PROMPT
-        while (userInput === null || userInput.trim() === "") {
-          userInput = prompt("You must enter 'Rock', 'Paper', or 'Scissors'. Or type 'Quit' at any time to quit.").toLowerCase();
-        };
-        formattedInput = userInput[0].toUpperCase() + userInput.slice(1);
-        // ALLOWS USER TO QUIT FROM SECONDARY PROMPT
-        if (formattedInput === 'Quit') {
-          console.log("See you next time");
-          break outerLoop;
-        };
-      };
-      // Player & Computer selections confirmed
-      playerSelection = formattedInput;
-      const computerSelection = computerPlay();
-      // Round played & scores altered (unless draw)
-      const round = playRound(playerSelection, computerSelection);
-      if (round.result === 'loss') {
-        computerScore++;
-      } else if (round.result === 'win') {
-        playerScore++;
-      };
-      console.log(`Round ${i}: ${round.msg}`);
-    }
+    const computerSelection = computerPlay();
+    // Round played, scores updated (unless draw)
+    const round = playRound(playerSelection, computerSelection);
+    if (round.result === 'loss') {
+      computerScore++;
+    } else if (round.result === 'win') {
+      playerScore++;
+    };
+    console.log(`Round ${i}: ${round.msg}`);
   };
+
   // Final score output
   if (computerScore > playerScore) {
     totalScore = "Sorry, you lost."
