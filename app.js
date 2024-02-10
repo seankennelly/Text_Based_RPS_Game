@@ -5,18 +5,17 @@ const computerPlay = () => {
 };
 
 const playRound = (playerSelection, computerSelection) => {
-  const selection = playerSelection;
-  if (selection === computerSelection) {
-    return { result: 'draw', msg: `You drew! You both picked ${selection}.` }
+  if (playerSelection === computerSelection) {
+    return { result: 'draw', msg: `You drew! You both picked ${playerSelection}.` }
   } else if
     (
-    selection === 'Rock' && computerSelection === 'Paper'
-    || selection === 'Paper' && computerSelection === 'Scissors'
-    || selection === 'Scissors' && computerSelection === 'Rock'
+    playerSelection === 'Rock' && computerSelection === 'Paper'
+    || playerSelection === 'Paper' && computerSelection === 'Scissors'
+    || playerSelection === 'Scissors' && computerSelection === 'Rock'
   ) {
-    return { result: 'loss', msg: `You lose! The computer's ${computerSelection} beats your ${selection}!` }
+    return { result: 'loss', msg: `You lose! The computer's ${computerSelection} beats your ${playerSelection}!` }
   } else {
-    return { result: 'win', msg: `You win! Your ${selection} beats the computer's ${computerSelection}!` }
+    return { result: 'win', msg: `You win! Your ${playerSelection} beats the computer's ${computerSelection}!` }
   };
 };
 
